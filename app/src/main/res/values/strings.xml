@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Waitlistable</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string-array name="options">
+        <item>Add Customer</item>
+    </string-array>
+    <string name="add_customer">Add Customer</string>
+    <string name="send_message">Text</string>
+    <string name="delete">Delete</string>
+    <string name="cust_info">Customer Information</string>
+    <string name="name_hint">Last Name</string>
+    <string name="party_num">Number waiting</string>
+    <string name="phone_num">Phone Number</string>
+    <string name="save_info">Save Customer</string>
+    //table
+    <string name="col1">Last Name</string>
+    <string name="col2">Party</string>
+    <string name="col3">Phone</string>
+    <string name="col4">Text</string>
+    <string name="col5">Remove</string>
+
+    //SendTextMessage
+    <string name="selected">Select</string>
+    <string name="send">Send</string>
+    <string-array name="message_options">
+        <item>Default wait</item>
+        <item>Default ready</item>
+    </string-array>
+</resources>
