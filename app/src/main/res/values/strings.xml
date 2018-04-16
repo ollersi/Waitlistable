@@ -9,13 +9,13 @@
     <string name="add_customer">Add Customer</string>
     <string name="send_message">Text</string>
     <string name="delete">Delete</string>
-    <string name="cust_info">Customer Information</string>
+    <string name="cust_info">Customer Information:</string>
     <string name="name_hint">Last Name</string>
     <string name="party_num">Number waiting</string>
     <string name="phone_num">Phone Number</string>
     <string name="save_info">Save Customer</string>
     //table
-    <string name="col1">Last Name</string>
+    <string name="col1">Name</string>
     <string name="col2">Party</string>
     <string name="col3">Phone</string>
     <string name="col4">Text</string>

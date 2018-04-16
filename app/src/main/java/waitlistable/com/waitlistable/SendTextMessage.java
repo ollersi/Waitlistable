@@ -2,16 +2,20 @@ package waitlistable.com.waitlistable;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import static waitlistable.com.waitlistable.HomeScreen.KEY_NUMBER_SEND;
 
 public class SendTextMessage extends Activity {
-
+    //private static final int SEND_SMS_CODE = 23;
     public String phNumber;
     public String message;
 
@@ -26,6 +30,13 @@ public class SendTextMessage extends Activity {
             phNumber = i.getStringExtra(KEY_NUMBER_SEND);
         }
         number.setText(phNumber);
+
+        Button startBtn = findViewById(R.id.final_send_message);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                sendSMS();
+            }
+        });
     }
 
     public void onSelect(View view) {
@@ -35,8 +46,7 @@ public class SendTextMessage extends Activity {
 
         if (selected.equals("Default wait")) {
             message = "Thank you for waiting, your expected wait time is 20 minutes.";
-        }
-        else if (selected.equals("Default ready")) {
+        } else if (selected.equals("Default ready")) {
             message = "Your table is now ready, please return to the hostess station for seating.";
         }
 
@@ -44,10 +54,31 @@ public class SendTextMessage extends Activity {
 
     }
 
+    protected void sendSMS() {
+        Log.i("Send SMS", "");
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+        smsIntent.setData(Uri.parse("smsto:"));
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address"  , phNumber);
+        smsIntent.putExtra("sms_body"  , message);
+
+        try {
+            startActivity(smsIntent);
+            finish();
+            Log.i("Finished sending SMS...", "");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(SendTextMessage.this,
+                    "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
     public void onSend(View view) {
-        android.telephony.SmsManager sms = android.telephony.SmsManager.getDefault();
-        sms.sendTextMessage(phNumber, null, message, null, null);
-        Intent in = new Intent(getApplicationContext(), HomeScreen.class);
-        startActivity(in);
+        //android.telephony.SmsManager sms = android.telephony.SmsManager.getDefault();
+        //sms.sendTextMessage(phNumber, null, message, null, null);
+        //Intent in = new Intent(getApplicationContext(), HomeScreen.class);
+        //startActivity(in);
     }
 }
