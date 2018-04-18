@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 
 import static waitlistable.com.waitlistable.HomeScreen.KEY_NUMBER_SEND;
+import static waitlistable.com.waitlistable.HomeScreen.KEY_WAIT_TIME;
 
 public class SendTextMessage extends Activity {
     //private static final int SEND_SMS_CODE = 23;
     public String phNumber;
     public String message;
+    public String waitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class SendTextMessage extends Activity {
         Intent i = getIntent();
         if (null != i) {
             phNumber = i.getStringExtra(KEY_NUMBER_SEND);
+            waitTime = i.getStringExtra(KEY_WAIT_TIME);
         }
         number.setText(phNumber);
 
@@ -45,7 +48,7 @@ public class SendTextMessage extends Activity {
         String selected = String.valueOf(selChoice.getSelectedItem());
 
         if (selected.equals("Default wait")) {
-            message = "Thank you for waiting, your expected wait time is 20 minutes.";
+            message = "Thank you for waiting, your expected wait time is " + waitTime + " minutes.";
         } else if (selected.equals("Default ready")) {
             message = "Your table is now ready, please return to the hostess station for seating.";
         }
@@ -57,7 +60,6 @@ public class SendTextMessage extends Activity {
     protected void sendSMS() {
         Log.i("Send SMS", "");
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-
         smsIntent.setData(Uri.parse("smsto:"));
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.putExtra("address"  , phNumber);
@@ -69,7 +71,7 @@ public class SendTextMessage extends Activity {
             Log.i("Finished sending SMS...", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(SendTextMessage.this,
-                    "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+                    "SMS failed, please try again later.", Toast.LENGTH_SHORT).show();
         }
     }
 

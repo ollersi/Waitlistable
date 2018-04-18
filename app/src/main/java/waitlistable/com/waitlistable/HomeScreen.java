@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,6 +24,7 @@ public class HomeScreen extends Activity {
     public static ArrayList<Customer> customers = new ArrayList<>();
     Customer customer = new Customer();
     public static final String KEY_NUMBER_SEND = "number";
+    public static final String KEY_WAIT_TIME = " ";
 
 
 
@@ -31,9 +33,11 @@ public class HomeScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        String name = "";
-        String party = "";
-        String phone = "";
+        String name = "a";
+        String party = " ";
+        String phone = " ";
+        int avgWait = 10;
+        final String wait = Integer.toString(avgWait);
 
 
         Intent intent = getIntent();
@@ -42,10 +46,12 @@ public class HomeScreen extends Activity {
             party = intent.getStringExtra(KEY_PARTY);
             phone = intent.getStringExtra(KEY_PHONE);
         }
-        customer.setName(name);
-        customer.setParty(party);
-        customer.setPhoneNum(phone);
-        customers.add(customer);
+        if (name != null) {
+            customer.setName(name);
+            customer.setParty(party);
+            customer.setPhoneNum(phone);
+            customers.add(customer);
+        }
 
         TableLayout table = findViewById(R.id.cust_table);
         TableRow rowH = new TableRow(this);
@@ -71,11 +77,11 @@ public class HomeScreen extends Activity {
         sendHead.setText(R.string.col4);
         TextViewCompat.setTextAppearance(sendHead, android.R.style.TextAppearance_Large);
         sendHead.setGravity(Gravity.CENTER_HORIZONTAL);
-        sendHead.setPadding(2, 1, 2, 1);
+        sendHead.setPadding(12, 1, 12, 1);
         removeHead.setText(R.string.col5);
         TextViewCompat.setTextAppearance(removeHead, android.R.style.TextAppearance_Large);
         removeHead.setGravity(Gravity.CENTER_HORIZONTAL);
-        removeHead.setPadding(2, 1, 2, 1);
+        removeHead.setPadding(12, 1, 0, 1);
         rowH.addView(nHead);
         rowH.addView(pHead);
         rowH.addView(phHead);
@@ -86,9 +92,7 @@ public class HomeScreen extends Activity {
 
         if (customers.size() > 0) {
             for (int i = 0; i < customers.size(); i++) {
-                //TableLayout table = findViewById(R.id.cust_table);
                 TableRow row = new TableRow(this);
-                //TableRow.LayoutParams layout = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                 row.setLayoutParams(layout);
                 TextView n = new TextView(this);
                 TextView p = new TextView(this);
@@ -106,14 +110,23 @@ public class HomeScreen extends Activity {
                         String sendNumber = view.getContentDescription().toString().trim();
                         Intent intentSend = new Intent(getApplicationContext(), SendTextMessage.class);
                         intentSend.putExtra(KEY_NUMBER_SEND, sendNumber);
+                        intentSend.putExtra(KEY_WAIT_TIME, wait);
                         startActivity(intentSend);
                     }
                 });
                 del.setText(R.string.delete);
+                del.setContentDescription(customers.get(i).getName());
                 del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        View row = (View) v.getParent();
+                        ViewGroup container = ((ViewGroup)row.getParent());
+                        container.removeView(row);
+                        container.invalidate();
+                        String toRemove = v.getContentDescription().toString().trim();
+                        if (customer.getName().equals(toRemove)) {
+                            customers.remove(customer);
+                        }
                     }
                 });
                 row.addView(n);
@@ -122,23 +135,17 @@ public class HomeScreen extends Activity {
                 row.addView(send);
                 row.addView(del);
                 row.setBackgroundColor(Color.LTGRAY);
-                //table.removeView(row);
+                //table.removeViewAt(1);
                 table.addView(row);
+                avgWait += 5;
 
-                //TextView n = (TextView) findViewById(R.id.cust_view);
-                //n.setText(customers.get(i).getName());
 
-                //TextView p = (TextView) findViewById(R.id.party_view);
-                //p.setText(customers.get(i).getParty());
-
-                //TextView ph = (TextView) findViewById(R.id.phone_view);
-                //ph.setText(customers.get(i).getPhoneNum());
             }
         }
 
-
-
-
+        TextView avg_wait = findViewById(R.id.display_wait);
+        //String wait = Integer.toString(avgWait);
+        avg_wait.setText(wait);
 
     }
     //add new waiting customer information

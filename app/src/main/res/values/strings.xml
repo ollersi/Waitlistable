@@ -20,6 +20,8 @@
     <string name="col3">Phone</string>
     <string name="col4">Text</string>
     <string name="col5">Remove</string>
+    //wait
+    <string name="avgWait">Current Wait Time: </string>
 
     //SendTextMessage
     <string name="selected">Select</string>
@@ -28,4 +30,6 @@
         <item>Default wait</item>
         <item>Default ready</item>
     </string-array>
+    <string name="sendTo">Send To: </string>
+    <string name="selMessage">Select Message</string>
 </resources>
