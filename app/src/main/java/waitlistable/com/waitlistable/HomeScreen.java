@@ -37,7 +37,6 @@ public class HomeScreen extends Activity {
         String party = " ";
         String phone = " ";
         int avgWait = 10;
-        final String wait = Integer.toString(avgWait);
 
 
         Intent intent = getIntent();
@@ -51,6 +50,7 @@ public class HomeScreen extends Activity {
             customer.setParty(party);
             customer.setPhoneNum(phone);
             customers.add(customer);
+            avgWait +=5;
         }
 
         TableLayout table = findViewById(R.id.cust_table);
@@ -87,7 +87,6 @@ public class HomeScreen extends Activity {
         rowH.addView(phHead);
         rowH.addView(sendHead);
         rowH.addView(removeHead);
-        //rowH.setBackgroundColor(Color.BLUE);
         table.addView(rowH);
 
         if (customers.size() > 0) {
@@ -109,8 +108,9 @@ public class HomeScreen extends Activity {
                     public void onClick(View view) {
                         String sendNumber = view.getContentDescription().toString().trim();
                         Intent intentSend = new Intent(getApplicationContext(), SendTextMessage.class);
+                        String sendWait = Integer.toString(15);
                         intentSend.putExtra(KEY_NUMBER_SEND, sendNumber);
-                        intentSend.putExtra(KEY_WAIT_TIME, wait);
+                        intentSend.putExtra(KEY_WAIT_TIME, sendWait);
                         startActivity(intentSend);
                     }
                 });
@@ -135,17 +135,15 @@ public class HomeScreen extends Activity {
                 row.addView(send);
                 row.addView(del);
                 row.setBackgroundColor(Color.LTGRAY);
-                //table.removeViewAt(1);
                 table.addView(row);
-                avgWait += 5;
 
 
             }
         }
 
         TextView avg_wait = findViewById(R.id.display_wait);
-        //String wait = Integer.toString(avgWait);
-        avg_wait.setText(wait);
+        String await = Integer.toString(avgWait);
+        avg_wait.setText(await);
 
     }
     //add new waiting customer information

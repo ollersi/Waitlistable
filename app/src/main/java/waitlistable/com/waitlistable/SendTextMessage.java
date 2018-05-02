@@ -16,7 +16,6 @@ import static waitlistable.com.waitlistable.HomeScreen.KEY_NUMBER_SEND;
 import static waitlistable.com.waitlistable.HomeScreen.KEY_WAIT_TIME;
 
 public class SendTextMessage extends Activity {
-    //private static final int SEND_SMS_CODE = 23;
     public String phNumber;
     public String message;
     public String waitTime;
@@ -77,10 +76,4 @@ public class SendTextMessage extends Activity {
 
 
 
-    public void onSend(View view) {
-        //android.telephony.SmsManager sms = android.telephony.SmsManager.getDefault();
-        //sms.sendTextMessage(phNumber, null, message, null, null);
-        //Intent in = new Intent(getApplicationContext(), HomeScreen.class);
-        //startActivity(in);
-    }
 }
